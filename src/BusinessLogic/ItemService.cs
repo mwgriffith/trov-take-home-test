@@ -6,6 +6,7 @@ using Database;
 using Database.Entities;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Transactions;
 
 namespace BusinessLogic
 {
@@ -39,26 +40,41 @@ namespace BusinessLogic
         /// <param name="Id">The id of the item to buy.</param>
         /// <returns>true if the purchase was successful, false otherwise.</returns>
         public async Task<Boolean> BuyItem(long Id)
-        {
-            // TODO add exceptions and transactions.
-            var itemToBuy = await _apiContext.Items.FindAsync(Id);
-
-            if (itemToBuy == null)
+        {           
+            
+            using (var transaction = _apiContext.Database.BeginTransaction())
             {
-                // Item to buy not found.
-                return false; 
-            }
+                try
+                {
+                    var itemToBuy = await _apiContext.Items.FindAsync(Id);
 
-            if (itemToBuy.Quantity <= 0)
-            {
-                // No more quanity to buy.
-                return false;
-            }
+                    if (itemToBuy == null)
+                    {
+                        // Item to buy not found.
+                        transaction.Rollback();
+                        return false;
+                    }
 
-            itemToBuy.Quantity--;
-            _apiContext.Entry(itemToBuy).State = EntityState.Modified;
-            await _apiContext.SaveChangesAsync();
-            return true;
+                    if (itemToBuy.Quantity <= 0)
+                    {
+                        // No more quanity to buy.
+                        transaction.Rollback();
+                        return false;
+                    }
+
+                    itemToBuy.Quantity--;
+                    _apiContext.Entry(itemToBuy).State = EntityState.Modified;
+                    await _apiContext.SaveChangesAsync();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        
         }
 
 
