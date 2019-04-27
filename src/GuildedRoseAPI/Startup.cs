@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using BusinessLogic;
+using Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace GuildedRoseAPI
 {
@@ -25,7 +28,15 @@ namespace GuildedRoseAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // Add in Transient services for injection.
+            services.AddTransient(typeof(IItemService), typeof(ItemService));
+
+            // Add in the in memory db, with it's transactions turned off.            
+            services.AddDbContext<APIContext>(options => options.UseInMemoryDatabase(databaseName: "GuildedRoase")
+                                                            .ConfigureWarnings(x => x.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.TransactionIgnoredWarning)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

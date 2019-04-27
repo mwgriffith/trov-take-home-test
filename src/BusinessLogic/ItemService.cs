@@ -13,7 +13,7 @@ namespace BusinessLogic
     /// <summary>
     /// Houses the business logic for all item operations.
     /// </summary>
-    public class ItemService
+    public class ItemService : IItemService
     {
         public readonly APIContext _apiContext;
 
