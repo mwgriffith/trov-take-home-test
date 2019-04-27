@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuildedRoseAPI", "GuildedRoseAPI\GuildedRoseAPI.csproj", "{F1EB7818-7010-41D4-8C54-78F5B29F552A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuildedRoseAPI", "GuildedRoseAPI\GuildedRoseAPI.csproj", "{F1EB7818-7010-41D4-8C54-78F5B29F552A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{CF9A862F-810C-475F-A71A-2CE4555B396F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{CF9A862F-810C-475F-A71A-2CE4555B396F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{462879E8-2778-46B9-AC89-12BA62F884D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestProject", "NUnitTestProject\NUnitTestProject.csproj", "{E95DBFC6-0AF6-42CC-9B4F-A7A0F3B21553}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject", "NUnitTestProject\UnitTestProject.csproj", "{E95DBFC6-0AF6-42CC-9B4F-A7A0F3B21553}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
