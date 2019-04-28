@@ -34,13 +34,13 @@ namespace IntegrationTests
                 var sp = services.BuildServiceProvider();
 
                 // Create a scope to obtain a reference to the database
-                // context (ApplicationDbContext).
+                // context (APIContext).
                 using (var scope = sp.CreateScope())
                 {
                     var scopedServices = scope.ServiceProvider;
                     var db = scopedServices.GetRequiredService<APIContext>();
-                    var logger = scopedServices
-                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                    //var logger = scopedServices
+                    //    .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
                     // Ensure the database is created.
                     db.Database.EnsureCreated();
@@ -48,12 +48,12 @@ namespace IntegrationTests
                     try
                     {
                         // Seed the database with test data.
-                        //Utilities.InitializeDbForTests(db);
+                        DataGenerator.Initialize(scopedServices);                        
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, $"An error occurred seeding the " +
-                            "database with test messages. Error: {ex.Message}");
+                        //logger.LogError(ex, $"An error occurred seeding the " +
+                        //    "database with test messages. Error: {ex.Message}");
                     }
                 }
             });

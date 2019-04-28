@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace GuildedRoseAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -25,13 +25,19 @@ namespace GuildedRoseAPI.Controllers
 
 
         [HttpPost]
-        public ActionResult GetToken(string username, string password)
+        public ActionResult GetToken([FromForm] UserModel user)
         {
-            if (IsValidUserandPassword(username, password))
+            if (IsValidUserandPassword(user.username, user.password))
             {
-                return Ok(GenerateToken(username));
+                return Ok(GenerateToken(user.username));
             } 
             return BadRequest();
+        }
+
+        public class UserModel
+        {
+            public string username { get; set; }
+            public string password { get; set; }
         }
 
 
