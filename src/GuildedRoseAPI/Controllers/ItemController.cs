@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLogic;
 using GuildedRoseAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GuildedRoseAPI.Controllers
 {
@@ -40,6 +41,7 @@ namespace GuildedRoseAPI.Controllers
         /// </summary>
         /// <param name="id">The id of the item to be bought.</param>
         /// <returns>True if successful, false if not.</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Boolean>> BuyItem(long id)
         {

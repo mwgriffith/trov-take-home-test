@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using BusinessLogic;
 using Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace GuildedRoseAPI
 {
@@ -30,6 +32,27 @@ namespace GuildedRoseAPI
         {
             services.AddOptions();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // Add in config.
+            services.AddSingleton<IConfiguration>(Configuration);
+                        
+            // Add authentication service.
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "Jwt";
+                options.DefaultChallengeScheme = "Jwt";
+            }).AddJwtBearer("Jwt", options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true,                          
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"])),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(5)
+                };
+            });
 
             // Add in Transient services for injection.
             services.AddTransient(typeof(IItemService), typeof(ItemService));
@@ -52,6 +75,7 @@ namespace GuildedRoseAPI
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
