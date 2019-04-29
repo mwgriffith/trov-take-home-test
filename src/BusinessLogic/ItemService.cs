@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Database;
+﻿using Database;
 using Database.Entities;
-using System.Linq;
+
 using Microsoft.EntityFrameworkCore;
-using System.Transactions;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
@@ -39,9 +39,9 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="Id">The id of the item to buy.</param>
         /// <returns>true if the purchase was successful, false otherwise.</returns>
+        /// <remarks>This method does a really basic buying of an item.</remarks>
         public async Task<Boolean> BuyItem(long Id)
-        {           
-            
+        {                       
             using (var transaction = _apiContext.Database.BeginTransaction())
             {
                 try

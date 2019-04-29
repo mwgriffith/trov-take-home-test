@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Database;
+
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using Database;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
+using System;
 
 namespace IntegrationTests
 {
@@ -39,8 +39,8 @@ namespace IntegrationTests
                 {
                     var scopedServices = scope.ServiceProvider;
                     var db = scopedServices.GetRequiredService<APIContext>();
-                    //var logger = scopedServices
-                    //    .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                    var logger = scopedServices
+                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
                     // Ensure the database is created.
                     db.Database.EnsureCreated();
@@ -52,8 +52,8 @@ namespace IntegrationTests
                     }
                     catch (Exception ex)
                     {
-                        //logger.LogError(ex, $"An error occurred seeding the " +
-                        //    "database with test messages. Error: {ex.Message}");
+                        logger.LogError(ex, $"An error occurred seeding the " +
+                            "database with test messages. Error: {ex.Message}");
                     }
                 }
             });

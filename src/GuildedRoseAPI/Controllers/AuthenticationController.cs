@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using GuildedRoseAPI.Models;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 
 namespace GuildedRoseAPI.Controllers
 {
@@ -24,6 +23,11 @@ namespace GuildedRoseAPI.Controllers
         }
 
 
+        /// <summary>
+        /// Returns a valid Jwt token if a valid user is passed in.
+        /// </summary>
+        /// <param name="user">A user that will be tested.</param>
+        /// <returns>A Jwt token if the user is correct, a badrequest otherwise.</returns>
         [HttpPost]
         public ActionResult GetToken([FromForm] UserModel user)
         {
@@ -33,20 +37,26 @@ namespace GuildedRoseAPI.Controllers
             } 
             return BadRequest();
         }
-
-        public class UserModel
-        {
-            public string username { get; set; }
-            public string password { get; set; }
-        }
-
-
+                
+        
+        /// <summary>
+        /// Checks to see if a username and password combo are valid.
+        /// </summary>
+        /// <param name="username">The username to check.</param>
+        /// <param name="password">The password to chec.</param>
+        /// <returns>True if they are valid, False otherwise.</returns>
+        /// <remarks>Since this is just a test the validation is extremely minimal.  Would never put this in production.</remarks>
         private Boolean IsValidUserandPassword(string username, string password)
         {
             return !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password);
         }
 
 
+        /// <summary>
+        /// Generates a Jwt token with the given username.
+        /// </summary>
+        /// <param name="username">The username of the user given the token.</param>
+        /// <returns>A Jwt Token.</returns>
         private string GenerateToken(string username)
         {
             var claims = new Claim[]

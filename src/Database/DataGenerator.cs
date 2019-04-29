@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Database.Entities;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Database.Entities;
 using System.Linq;
 
 namespace Database

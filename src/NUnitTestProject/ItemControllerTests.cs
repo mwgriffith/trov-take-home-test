@@ -1,23 +1,34 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Moq;
-using BusinessLogic;
+﻿using BusinessLogic;
+
 using Database.Entities;
+
 using GuildedRoseAPI.Controllers;
 using GuildedRoseAPI.Models;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Core;
+
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+
+using Moq;
+
+using NUnit.Framework;
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Tests
 {
+
+    /// <summary>
+    /// This class tests the ItemController in the GuildedRoseAPI.
+    /// </summary>
     [TestFixture]
     public class ItemControllerTests
     {
 
+        /// <summary>
+        /// Creates a hard coded list of Items for mocking purposes.
+        /// </summary>
+        /// <returns>An IEnumerable of Item.</returns>
         private IEnumerable<Item> GetDBItems()
         {
             return new List<Item>() {
@@ -28,6 +39,10 @@ namespace Tests
             };
         }
 
+
+        /// <summary>
+        /// Tests the GetInventory call.
+        /// </summary>        
         [Test]
         public async Task Test_GetInventory()
         {
@@ -47,6 +62,9 @@ namespace Tests
         }
 
 
+        /// <summary>
+        /// Tests the BuyItem call.
+        /// </summary>        
         [Test]
         public async Task Test_BuyItem()
         {

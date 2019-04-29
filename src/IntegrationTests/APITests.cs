@@ -1,14 +1,17 @@
-using Microsoft.AspNetCore.Mvc.Testing;
 using System;
-using System.Threading.Tasks;
-using Xunit;
-using System.Net.Http;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
+using Xunit;
 
 namespace IntegrationTests
 {
+    /// <summary>
+    /// Performs the Integration test for the GuildedRoseAPI
+    /// </summary>
     public class APITests : IClassFixture<CustomWebApplicationFactory<GuildedRoseAPI.Startup>>
     {
 
@@ -20,6 +23,9 @@ namespace IntegrationTests
         }
 
 
+        /// <summary>
+        /// Tests the /api/item/getinventory/ call.
+        /// </summary>        
         [Fact]        
         public async Task Test_Api_Item_GetInventory()
         {
@@ -32,6 +38,9 @@ namespace IntegrationTests
 
 
 
+        /// <summary>
+        /// Tests the /api/authentication/gettoken call with a passed in username and password.
+        /// </summary>        
         [Fact]
         public async Task Test_Api_Authentication_GetToken()
         {
@@ -54,6 +63,9 @@ namespace IntegrationTests
 
 
 
+        /// <summary>
+        /// Tests the /api/item/buyitem/ call and make sure it needs the auth token.
+        /// </summary>        
         [Fact]
         public async Task Test_Api_Item_BuyItem_BadAuth()
         {
@@ -65,6 +77,9 @@ namespace IntegrationTests
 
 
 
+        /// <summary>
+        /// Tests the /api/item/buyitem/ call, also calls the /api/authentication/gettoken call to get a good token for the buyitem call.
+        /// </summary>        
         [Fact]
         public async Task Test_Api_Item_BuyItem()
         {

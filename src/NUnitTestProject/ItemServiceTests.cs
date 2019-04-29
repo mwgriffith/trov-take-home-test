@@ -9,11 +9,17 @@ using System;
 
 namespace Tests
 {
+    /// <summary>
+    /// This class tests the ItemService from the BusinessLogic project.
+    /// </summary>
     [TestFixture]
     public class ItemServiceTests
     {
-                
 
+        /// <summary>
+        /// Private function that creates a hard coded inmemorydb for testing purposes.
+        /// </summary>
+        /// <returns>A DbContextOptions<APIContext></returns>
         private DbContextOptions<APIContext> CreateInMemoryDB()
         {
             var options = new DbContextOptionsBuilder<APIContext>()
@@ -34,14 +40,7 @@ namespace Tests
             return options;
         }
 
-
-
-        [SetUp]
-        public void Setup()
-        {
-            
-        }
-
+                
 
         /// <summary>
         /// Tests the GetInventory method of ItemService in the BusinessLogic project.
